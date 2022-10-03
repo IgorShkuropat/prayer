@@ -3,12 +3,14 @@ import {View, TouchableHighlight, TextInput, Text} from 'react-native';
 import {StyleSheet} from 'react-native';
 import {colors} from '../../../shared/colors';
 import {AddIcon} from '../../Icons';
+import {Control, Controller} from 'react-hook-form';
 
 type Props = {
   onPress: () => void;
-  value: string;
+  control: Control<Record<string, string>, any>;
+  name: string;
 };
-export const PrayerInput: React.FC<Props> = ({onPress, value}) => {
+export const PrayerInput: React.FC<Props> = ({onPress, control, name}) => {
   return (
     <View style={styles.container}>
       <TouchableHighlight
@@ -17,10 +19,19 @@ export const PrayerInput: React.FC<Props> = ({onPress, value}) => {
         style={styles.iconWrapper}>
         <AddIcon color={styles.icon.color} />
       </TouchableHighlight>
-      <TextInput
-        placeholder="Add a prayer..."
-        selectionColor={colors.NEW_GRAY}
-        value={value}
+      <Controller
+        control={control}
+        name={name}
+        render={({field: {onChange, value, onBlur}}) => (
+          <TextInput
+            placeholder="Add a prayer..."
+            placeholderTextColor={colors.GRAY}
+            selectionColor={colors.NEW_GRAY}
+            value={value}
+            onBlur={onBlur}
+            onChangeText={value => onChange(value)}
+          />
+        )}
       />
     </View>
   );
@@ -49,11 +60,9 @@ const styles = StyleSheet.create({
     paddingRight: 13,
   },
   input: {
-    fontFamily: 'SF UI Text',
     fontSize: 17,
     lineHeight: 20,
     width: 116,
-    selectionColor: colors.NEW_GRAY,
     overflow: 'hidden',
   },
 });

@@ -16,7 +16,7 @@ const App = () => {
   const {control, getValues} = useForm();
   return (
     <SafeAreaView>
-      <PrayerInput onPress={() => {}} value="" />
+      <PrayerInput onPress={() => {}} control={control} name="input" />
       <Checkbox control={control} id={0} getValues={getValues} />
     </SafeAreaView>
   );
