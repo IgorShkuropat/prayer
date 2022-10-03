@@ -1,14 +1,5 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
 import React, {type PropsWithChildren} from 'react';
+import {useForm} from 'react-hook-form';
 import {
   SafeAreaView,
   ScrollView,
@@ -16,15 +7,17 @@ import {
   StyleSheet,
   Text,
   View,
+  Pressable,
 } from 'react-native';
 
-import {PrayerInput} from './src/components';
+import {PrayerInput, Checkbox} from './src/components';
 
 const App = () => {
+  const {control, getValues} = useForm();
   return (
     <SafeAreaView>
-      <PrayerInput onPress={() => {}} />
-      <Text>goga</Text>
+      <PrayerInput onPress={() => {}} value="" />
+      <Checkbox control={control} id={0} getValues={getValues} />
     </SafeAreaView>
   );
 };
