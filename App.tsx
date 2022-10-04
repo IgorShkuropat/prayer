@@ -9,16 +9,23 @@ import {
   View,
   Pressable,
 } from 'react-native';
+import {Provider} from 'react-redux';
+import store, {persistor} from './src/store';
+import {PersistGate} from 'redux-persist/integration/react';
 
 import {PrayerInput, PrayerItem} from './src/components';
 
 const App = () => {
   const {control, getValues} = useForm();
   return (
-    <SafeAreaView>
-      <PrayerInput onPress={() => {}} control={control} name="input" />
-      <PrayerItem control={control} id={0} status="s" />
-    </SafeAreaView>
+    <Provider store={store}>
+      <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}>
+        <SafeAreaView>
+          <PrayerInput onPress={() => {}} control={control} name="input" />
+          <PrayerItem status="s" control={control} id={0} />
+        </SafeAreaView>
+      </PersistGate>
+    </Provider>
   );
 };
 
