@@ -10,14 +10,14 @@ import {
   Pressable,
 } from 'react-native';
 
-import {PrayerInput, Checkbox} from './src/components';
+import {PrayerInput, PrayerItem} from './src/components';
 
 const App = () => {
   const {control, getValues} = useForm();
   return (
     <SafeAreaView>
       <PrayerInput onPress={() => {}} control={control} name="input" />
-      <Checkbox control={control} id={0} getValues={getValues} />
+      <PrayerItem control={control} id={0} status="s" />
     </SafeAreaView>
   );
 };

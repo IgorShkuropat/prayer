@@ -26,7 +26,7 @@ export const PrayerInput: React.FC<Props> = ({onPress, control, name}) => {
           <TextInput
             placeholder="Add a prayer..."
             placeholderTextColor={colors.GRAY}
-            selectionColor={colors.NEW_GRAY}
+            selectionColor={colors.BLUE_GREEN}
             value={value}
             onBlur={onBlur}
             onChangeText={value => onChange(value)}
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   icon: {
-    color: colors.NEW_GRAY,
+    color: colors.BLUE_GREEN,
   },
   iconWrapper: {
     paddingLeft: 13,

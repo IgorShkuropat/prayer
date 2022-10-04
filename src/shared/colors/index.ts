@@ -9,6 +9,7 @@ export const enum colors {
   BROWN = '#514D47',
   SAND = '#BFB393',
   VINOUS = '#AC5253',
-  NEW_GRAY = '#72A8BC',
-  LIGHT_GREY = '#C8C8C8',
+  BLUE_GREEN = '#72A8BC',
+  NEW_GREY = '#C8C8C8',
+  LIGHT_GREY = '#E5E5E5',
 }

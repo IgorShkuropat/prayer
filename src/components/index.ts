@@ -1,1 +1,1 @@
-export {PrayerInput, Checkbox} from './UIcomponents';
+export {PrayerInput, PrayerItem, Checkbox} from './UIcomponents';
