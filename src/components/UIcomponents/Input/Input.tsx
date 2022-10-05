@@ -7,18 +7,21 @@ type Props = {
   control: Control<any, any>;
   name: string;
   secureTextEntry?: boolean;
+  required: boolean;
 } & TextInputProps;
 
 export const Input: React.FC<Props> = ({
   control,
   name,
   secureTextEntry = false,
+  required,
   ...props
 }) => {
   return (
     <Controller
       control={control}
       name={name}
+      rules={{required: required}}
       render={({field: {onChange, value, onBlur}}) => (
         <TextInput
           //   placeholder={placeholder}

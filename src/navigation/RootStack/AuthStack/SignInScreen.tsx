@@ -49,6 +49,7 @@ export const SignInScreen = ({
       />
       <Input
         control={control}
+        required
         style={styles.input}
         placeholderTextColor={colors.GRAY}
         placeholder="Email"
@@ -56,6 +57,7 @@ export const SignInScreen = ({
       />
       <Input
         control={control}
+        required
         style={styles.input}
         placeholderTextColor={colors.GRAY}
         placeholder="Password"

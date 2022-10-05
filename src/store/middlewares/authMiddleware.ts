@@ -13,8 +13,8 @@ export const authMiddleware =
       } catch (error) {}
     };
     if (
-      action.type === signUp.fulfilled.type &&
-      action.type === signIn.fulfilled.type
+      action.type === signUp?.fulfilled?.type &&
+      action.type === signIn?.fulfilled?.type
     ) {
       action.payload?.token && storeData('token', action.payload.token);
       action.payload?.token &&

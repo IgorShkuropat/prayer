@@ -11,6 +11,7 @@ import {colors} from '../../../shared/colors';
 
 type Props = {
   title: string;
+  //   back:
 };
 
 export const ScreenHeader: React.FC<Props> = ({title}) => {

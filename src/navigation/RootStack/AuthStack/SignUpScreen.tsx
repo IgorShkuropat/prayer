@@ -25,7 +25,11 @@ type Fields = {
 export const SignUpScreen = ({
   navigation,
 }: NativeStackScreenProps<AuthStackParams>) => {
-  const {control, handleSubmit} = useForm<Fields>();
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm<Fields>();
   const dispatch = useAppDispatch();
   const onSubmit: SubmitHandler<Fields> = ({name, email, password}) => {
     dispatch(signUp({email: email, name: name, password: password}));
@@ -43,22 +47,28 @@ export const SignUpScreen = ({
   }, []);
   return (
     <SafeAreaView style={styles.container}>
+      {errors.name ? <Text>This field is required</Text> : null}
       <Input
         control={control}
+        required
         style={styles.input}
         placeholderTextColor={colors.GRAY}
         placeholder="Name"
         name="name"
       />
+      {errors.email ? <Text>This field is required</Text> : null}
       <Input
         control={control}
+        required
         style={styles.input}
         placeholderTextColor={colors.GRAY}
         placeholder="Email"
         name="email"
       />
+      {errors.password ? <Text>This field is required</Text> : null}
       <Input
         control={control}
+        required
         style={styles.input}
         placeholderTextColor={colors.GRAY}
         placeholder="Password"
