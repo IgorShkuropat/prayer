@@ -6,6 +6,7 @@
 
     /* Completeness */
     "skipLibCheck": true,
-    "types": ["node"],                /* Skip type checking all .d.ts files. */
+    "types": ["node"],     
+              /* Skip type checking all .d.ts files. */
   }
 }
