@@ -79,6 +79,7 @@ export const SignUpScreen = ({
       <TouchableHighlight
         underlayColor="#DDDDDD"
         activeOpacity={0.6}
+        style={{marginTop: 10}}
         onPress={() => navigation.navigate('SignIn')}>
         <Text style={{textDecorationLine: 'underline'}}>I have account</Text>
       </TouchableHighlight>

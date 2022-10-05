@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {SafeAreaView, StyleSheet, Button, Image} from 'react-native';
+import {SafeAreaView, StyleSheet, Button, Image, Text} from 'react-native';
 import {Input} from '../../../components';
 import {colors} from '../../../shared/colors';
 import {SubmitHandler, useForm} from 'react-hook-form';
@@ -18,7 +18,11 @@ type Fields = {
 export const SignInScreen = ({
   navigation,
 }: NativeStackScreenProps<AuthStackParams>) => {
-  const {control, handleSubmit} = useForm<Fields>();
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm<Fields>();
   const dispatch = useAppDispatch();
   const onSubmit: SubmitHandler<Fields> = ({email, password}) => {
     dispatch(
@@ -47,6 +51,7 @@ export const SignInScreen = ({
         }}
         style={{width: 150, height: 150}}
       />
+      {errors.email ? <Text>This field is required</Text> : null}
       <Input
         control={control}
         required
@@ -55,6 +60,7 @@ export const SignInScreen = ({
         placeholder="Email"
         name="email"
       />
+      {errors.password ? <Text>This field is required</Text> : null}
       <Input
         control={control}
         required
