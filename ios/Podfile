@@ -26,6 +26,7 @@ target 'prayer' do
     :app_path => "#{Pod::Config.instance.installation_root}/..",
     
   )
+  # use_flipper!('Flipper' => '0.168.0')
 
   target 'prayerTests' do
     inherit! :complete

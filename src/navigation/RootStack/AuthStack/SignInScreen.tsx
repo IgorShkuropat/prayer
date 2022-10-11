@@ -7,8 +7,9 @@ import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AuthStackParams} from './AuthStack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {http} from '../../../../services/http';
-import {useAppDispatch} from '../../../utils/hooks';
-import {signIn} from '../../../ducks/auth';
+import {useAppDispatch, useAppSelector} from '../../../utils/hooks';
+import {selectIsAuthLoading, signIn} from '../../../ducks/auth';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 type Fields = {
   email: string;
@@ -23,7 +24,9 @@ export const SignInScreen = ({
     handleSubmit,
     formState: {errors},
   } = useForm<Fields>();
+
   const dispatch = useAppDispatch();
+  const isLoading = useAppSelector(selectIsAuthLoading);
   const onSubmit: SubmitHandler<Fields> = ({email, password}) => {
     dispatch(
       signIn({
@@ -32,32 +35,45 @@ export const SignInScreen = ({
       }),
     );
   };
-  useEffect(() => {
-    const retrieveData = async (key: string) => {
-      try {
-        const token = await AsyncStorage.getItem(key);
-        http.setAuthorizationHeader(token as string);
-        // token && navigation.push('HomeStack route')
-      } catch (error) {}
-    };
-    retrieveData('token');
-  }, []);
+
+  // useEffect(() => {
+  //   const retrieveData = async (key: string) => {
+  //     try {
+  //       const token = await AsyncStorage.getItem(key);
+  //       http.setAuthorizationHeader(token as string);
+  //       // token && navigation.push('HomeStack route')
+  //     } catch (error) {}
+  //   };
+  //   retrieveData('token');
+  // }, []);
 
   return (
     <SafeAreaView style={styles.container}>
+      <Spinner visible={isLoading} />
       <Image
         source={{
           uri: 'https://static.wikia.nocookie.net/inconsistently-heinous/images/7/76/FloweyTransparent.png/revision/latest?cb=20211120142012',
         }}
         style={{width: 150, height: 150}}
       />
-      {errors.email ? <Text>This field is required</Text> : null}
+      {errors.email ? (
+        <Text>
+          {errors.email.message
+            ? `This field is required, ${errors.email.message}`
+            : 'This field is required'}
+        </Text>
+      ) : null}
       <Input
         control={control}
         required
         style={styles.input}
         placeholderTextColor={colors.GRAY}
         placeholder="Email"
+        pattern={{
+          value:
+            /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+          message: 'Incorrect email',
+        }}
         name="email"
       />
       {errors.password ? <Text>This field is required</Text> : null}

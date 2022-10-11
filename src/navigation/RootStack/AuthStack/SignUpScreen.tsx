@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {
   SafeAreaView,
   Text,
@@ -11,10 +11,9 @@ import {colors} from '../../../shared/colors';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AuthStackParams} from './AuthStack';
-import {useAppDispatch} from '../../../utils/hooks';
-import {signUp} from '../../../ducks/auth';
-import {http} from '../../../../services/http';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useAppDispatch, useAppSelector} from '../../../utils/hooks';
+import {selectIsAuthLoading, signUp} from '../../../ducks/auth';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 type Fields = {
   name: string;
@@ -31,22 +30,14 @@ export const SignUpScreen = ({
     formState: {errors},
   } = useForm<Fields>();
   const dispatch = useAppDispatch();
-  const onSubmit: SubmitHandler<Fields> = ({name, email, password}) => {
-    dispatch(signUp({email: email, name: name, password: password}));
+  const onSubmit: SubmitHandler<Fields> = data => {
+    dispatch(signUp(data));
   };
+  const isLoading = useAppSelector(selectIsAuthLoading);
 
-  useEffect(() => {
-    const retrieveData = async (key: string) => {
-      try {
-        const token = await AsyncStorage.getItem(key);
-        http.setAuthorizationHeader(token as string);
-        // token && navigation.push('HomeStack route')
-      } catch (error) {}
-    };
-    retrieveData('token');
-  }, []);
   return (
     <SafeAreaView style={styles.container}>
+      <Spinner visible={isLoading} />
       {errors.name ? <Text>This field is required</Text> : null}
       <Input
         control={control}
@@ -56,12 +47,23 @@ export const SignUpScreen = ({
         placeholder="Name"
         name="name"
       />
-      {errors.email ? <Text>This field is required</Text> : null}
+      {errors.email ? (
+        <Text>
+          {errors.email.message
+            ? `This field is required, ${errors.email.message}`
+            : 'This field is required'}
+        </Text>
+      ) : null}
       <Input
         control={control}
         required
         style={styles.input}
         placeholderTextColor={colors.GRAY}
+        pattern={{
+          value:
+            /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+          message: 'Incorrect email',
+        }}
         placeholder="Email"
         name="email"
       />

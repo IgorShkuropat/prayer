@@ -1,25 +1,20 @@
-import React, {type PropsWithChildren} from 'react';
-import {useForm} from 'react-hook-form';
-import {SafeAreaView, Text} from 'react-native';
+import React, {useEffect} from 'react';
+import {Text} from 'react-native';
 import {Provider} from 'react-redux';
 import store, {persistor} from './src/store';
 import {PersistGate} from 'redux-persist/integration/react';
 import {RootStack} from './src/navigation';
-import {PrayerInput, PrayerItem} from './src/components';
 import {NavigationContainer} from '@react-navigation/native';
+import {MagicModalPortal} from 'react-native-magic-modal';
 
 const App = () => {
-  const {control, getValues} = useForm();
   return (
     <Provider store={store}>
       <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}>
+        <MagicModalPortal />
         <NavigationContainer>
           <RootStack />
         </NavigationContainer>
-        {/* <SafeAreaView> */}
-        {/* <PrayerInput onPress={() => {}} control={control} name="input" />
-            <PrayerItem status="s" control={control} id={0} /> */}
-        {/* </SafeAreaView> */}
       </PersistGate>
     </Provider>
   );

@@ -1,6 +1,5 @@
 import React from 'react';
-import {TextInput, StyleSheet, TextInputProps} from 'react-native';
-import {colors} from '../../../shared/colors';
+import {TextInput, TextInputProps} from 'react-native';
 import {Control, Controller} from 'react-hook-form';
 
 type Props = {
@@ -8,6 +7,7 @@ type Props = {
   name: string;
   secureTextEntry?: boolean;
   required: boolean;
+  pattern?: any;
 } & TextInputProps;
 
 export const Input: React.FC<Props> = ({
@@ -15,13 +15,14 @@ export const Input: React.FC<Props> = ({
   name,
   secureTextEntry = false,
   required,
+  pattern,
   ...props
 }) => {
   return (
     <Controller
       control={control}
       name={name}
-      rules={{required: required}}
+      rules={{required: required, pattern: pattern}}
       render={({field: {onChange, value, onBlur}}) => (
         <TextInput
           //   placeholder={placeholder}

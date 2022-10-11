@@ -18,7 +18,6 @@ export const AuthStack = () => {
     <Stack.Navigator
       initialRouteName={paths.SIGN_UP}
       screenOptions={{
-        // headerShown: false,
         header: ({route, options}) => {
           const title = getHeaderTitle(options, route.name);
           return <ScreenHeader title={title} />;
