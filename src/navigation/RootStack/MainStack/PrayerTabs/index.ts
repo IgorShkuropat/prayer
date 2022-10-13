@@ -1,0 +1,1 @@
+export {PrayerTabs} from './PrayerTabs';

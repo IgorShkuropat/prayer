@@ -1,17 +1,21 @@
-import React from 'react';
-import {Checkbox} from '../Checkbox';
+import React, {useEffect} from 'react';
+import {Checkbox} from '../UIcomponents/Checkbox';
 import {Text, StyleSheet, View} from 'react-native';
-import {colors} from '../../../shared/colors';
-import {Control} from 'react-hook-form';
-import {HumanIcon, PrayerHandsIcon} from '../../Icons';
-import {UseFormWatch} from 'react-hook-form';
+import {colors} from '../../shared/colors';
+import {Control, UseFormWatch} from 'react-hook-form';
+import {HumanIcon, PrayerHandsIcon} from '../Icons';
+import {useAppDispatch} from '../../utils/hooks';
+import {
+  addCardToAnswered,
+  deleteAnsweredCardsFromCards,
+} from '../../ducks/prayers';
 
 type Props = {
   control: Control<any, any>;
+  watch: UseFormWatch<any>;
   id: number;
   label?: string;
   checked: boolean;
-  watch: UseFormWatch<any>;
 };
 export const PrayerItem: React.FC<Props> = ({
   control,
@@ -20,7 +24,17 @@ export const PrayerItem: React.FC<Props> = ({
   checked,
   watch,
 }) => {
+  const dispatch = useAppDispatch();
+
   const watchCheckbox = watch(`checkbox${id}`);
+
+  useEffect(() => {
+    if (watchCheckbox) {
+      dispatch(addCardToAnswered(id));
+      dispatch(deleteAnsweredCardsFromCards(id));
+    }
+    checked = true;
+  }, [watchCheckbox, id]);
   return (
     <View style={styles.container}>
       <View
@@ -60,6 +74,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: colors.WHITE,
   },
   status: {
     width: 3,

@@ -1,24 +1,27 @@
 import {getHeaderTitle} from '@react-navigation/elements';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {SignInScreen} from '../AuthStack';
 import {ScreenHeader} from '../../../components';
-import {AddIcon} from '../../../components/Icons';
+import {AddIcon, SettingsIcon} from '../../../components/Icons';
 import React from 'react';
 import {colors} from '../../../shared/colors';
 import {MyDeskScreen} from './MyDeskScreen';
 import {magicModal} from 'react-native-magic-modal';
-import {AddColumnModal} from '../../../components/UIcomponents';
+import {CreateColumnModal} from '../../../components';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {useAppSelector} from '../../../utils/hooks';
 import {selectIsColumnsLoading} from '../../../ducks/columns/selectors';
+import {PrayerTabs} from './PrayerTabs';
+import {DetailsScreen} from './DetailsScreen';
 
 const enum paths {
   MY_DESK = 'My Desk',
   TODO = 'To Do',
+  DETAILS = 'Details',
 }
 export type MainStackParamList = {
   ['My Desk']: {isModalActive: boolean};
-  ['To Do']: undefined;
+  ['To Do']: {columnId?: number};
+  ['Details']: {prayerId: number};
 };
 const Stack = createNativeStackNavigator<MainStackParamList>();
 export const MainStack = () => {
@@ -37,9 +40,9 @@ export const MainStack = () => {
                 buttonIcon={<AddIcon color={colors.BLUE_GREEN} />}
                 buttonCallBack={() =>
                   magicModal.show(() => (
-                    <AddColumnModal>
+                    <CreateColumnModal>
                       <Spinner visible={isLoading} />
-                    </AddColumnModal>
+                    </CreateColumnModal>
                   ))
                 }
               />
@@ -50,14 +53,25 @@ export const MainStack = () => {
       </Stack.Screen>
       <Stack.Screen
         name={paths.TODO}
-        component={SignInScreen}
+        component={PrayerTabs}
         options={{
-          title: 'Sign In',
-          headerTitleStyle: {
-            fontSize: 22,
-            fontWeight: '700',
-            color: colors.BROWN,
+          title: 'To Do',
+          header: ({route, options}) => {
+            const title = getHeaderTitle(options, route.name);
+            return (
+              <ScreenHeader
+                title={title}
+                buttonIcon={<SettingsIcon color={colors.BLUE_GREEN} />}
+              />
+            );
           },
+        }}
+      />
+      <Stack.Screen
+        name={paths.DETAILS}
+        component={DetailsScreen}
+        options={{
+          headerShown: false,
         }}
       />
     </Stack.Navigator>

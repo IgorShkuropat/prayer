@@ -9,7 +9,7 @@ const initialState: InitialState = {
 };
 
 export const getAllColumns = createAsyncThunk<Columns[]>(
-  'auth/getAllColumns',
+  'column/getAllColumns',
   async (_, {rejectWithValue}) => {
     try {
       const response = await api.ColumnsApi.columnsControllerFindColumns();
@@ -22,7 +22,7 @@ export const getAllColumns = createAsyncThunk<Columns[]>(
 export const createColumn = createAsyncThunk<
   Columns,
   Omit<ColumnsDto, 'prayerId'>
->('auth/createColumn', async (payload, {rejectWithValue}) => {
+>('column/createColumn', async (payload, {rejectWithValue}) => {
   try {
     const response = await api.ColumnsApi.columnsControllerCreate(
       payload as ColumnsDto,
@@ -34,7 +34,7 @@ export const createColumn = createAsyncThunk<
 });
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: 'column',
   initialState,
   reducers: {},
   extraReducers: {

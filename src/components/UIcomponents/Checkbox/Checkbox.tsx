@@ -8,8 +8,9 @@ import {Control, Controller} from 'react-hook-form';
 type Props = {
   control: Control<Record<string, boolean>, any>;
   id: number;
+  checked: boolean;
 };
-export const Checkbox: React.FC<Props> = ({control, id}) => {
+export const Checkbox: React.FC<Props> = ({control, id, checked}) => {
   return (
     <Controller
       control={control}
@@ -20,7 +21,7 @@ export const Checkbox: React.FC<Props> = ({control, id}) => {
           ImageComponent={CheckboxMark}
           style={{width: 24}}
           fillColor="white"
-          isChecked={false}
+          isChecked={checked}
           onPress={onChange}
         />
       )}

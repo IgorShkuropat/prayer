@@ -1,18 +1,19 @@
 import React from 'react';
 import {View, Text, Button, StyleSheet} from 'react-native';
-import {colors} from '../../../shared/colors';
-import {Input} from '../../UIcomponents';
+import {colors} from '../../shared/colors';
+import {Input} from '../UIcomponents';
 import {useForm, SubmitHandler} from 'react-hook-form';
-import {useAppDispatch} from '../../../utils/hooks';
-import {createColumn} from '../../../ducks/columns/columnsSlice';
+import {useAppDispatch} from '../../utils/hooks';
+import {createColumn} from '../../ducks/columns/columnsSlice';
 import {magicModal} from 'react-native-magic-modal';
+import {BaseModal} from '../UIcomponents';
 
 type Fields = {
   columnTitleField: string;
   columnDescriptionField: string;
 };
 
-export const AddColumnModal: React.FC<{children: React.ReactNode}> = ({
+export const CreateColumnModal: React.FC<{children: React.ReactNode}> = ({
   children,
 }) => {
   const {control, handleSubmit} = useForm<Fields>();
@@ -32,7 +33,7 @@ export const AddColumnModal: React.FC<{children: React.ReactNode}> = ({
     magicModal.hide();
   };
   return (
-    <View style={styles.wrapper}>
+    <BaseModal>
       <Text style={styles.text}>Che nado?</Text>
       <Input
         style={styles.input}
@@ -50,20 +51,11 @@ export const AddColumnModal: React.FC<{children: React.ReactNode}> = ({
       />
       <Button title="Submit" onPress={handleSubmit(submitInputs)} />
       {children}
-    </View>
+    </BaseModal>
   );
 };
 
 const styles = StyleSheet.create({
-  wrapper: {
-    width: 300,
-    height: 160,
-    padding: 15,
-    backgroundColor: colors.WHITE,
-    alignSelf: 'center',
-    borderRadius: 10,
-    justifyContent: 'space-between',
-  },
   text: {
     alignSelf: 'center',
     fontWeight: '700',

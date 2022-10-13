@@ -1,0 +1,1 @@
+export {DeletePrayerButton} from './DeletePrayerButton';

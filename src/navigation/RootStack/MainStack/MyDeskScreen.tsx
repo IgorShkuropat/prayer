@@ -8,6 +8,7 @@ import {MainStackParamList} from './MainStack';
 import {colors} from '../../../shared/colors';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {selectIsColumnsLoading} from '../../../ducks/columns/selectors';
+
 type Props = NativeStackScreenProps<MainStackParamList, 'My Desk'> & {
   children: React.ReactNode;
 };
@@ -27,9 +28,13 @@ export const MyDeskScreen: React.FC<Props> = ({
   return (
     <ScrollView style={styles.wrapper}>
       {columns?.map(column => (
-        <Pressable key={String(column.id)} onPress={() => {}}>
-          <ColumnItem title={column.title} pressableCallBack={() => {}} />
-        </Pressable>
+        <ColumnItem
+          key={String(column.id)}
+          title={column.title}
+          pressableCallBack={() =>
+            navigation.navigate('To Do', {columnId: column.id})
+          }
+        />
       ))}
       {children}
       <Spinner visible={isLoading} />
